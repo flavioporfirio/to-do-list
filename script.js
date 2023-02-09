@@ -1,28 +1,7 @@
-const btnReload = document.querySelector(".btn-reload");
-const btnReload1 = document.querySelector(".btn-reload1");
 const btnPlus = document.querySelector(".btn");
 const btnNovaLista = document.querySelector(".new-list");
-const btnNovoDia = document.querySelector(".novo-dia");
-const time = new Date();
-const actualDay = time.getDate();
-let newDate = 0;
-let cont = 0;
 
-//FIXME;
-function formatDate(date) {
-  // formata a data para o formato DD/MM/YYYY
-  return `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`;
-}
-
-const takeTextInput = function () {
-  return document.querySelector(".tarefas").value;
-};
-
-const removeTextInput = function () {
-  return (document.querySelector(".tarefas").value = "");
-};
-
-const lineContent = function (takeText, time) {
+const lineContent = function (takeText) {
   return `<input type='checkbox' class='checkbox-round' /> <p>${takeText}`;
 };
 
@@ -48,9 +27,10 @@ const btnEditClasses = function (btnEdit) {
 };
 
 btnPlus.addEventListener("click", function () {
-  takeText = takeTextInput();
-  // takeText = takeTextInput();
-  removeTextInput();
+  takeText = document.querySelector(".tarefas").value;
+
+  document.querySelector(".tarefas").value = "";
+
   const linhaCriada = createNewLine();
   const btnRemove = createButtonEl();
   const btnEdit = createButtonEl();
@@ -68,13 +48,11 @@ btnPlus.addEventListener("click", function () {
   });
 
   btnEdit.onclick = function () {
-    const date = formatDate(time);
     const newContent = prompt("New task");
     linhaCriada.innerHTML = `<input type='checkbox' class='checkbox-round' /><p>${newContent}</p>`;
     linhaCriada.appendChild(btnEdit);
     linhaCriada.appendChild(btnRemove);
   };
-  console.log(document.querySelector(".lista-tarefas"));
 });
 
 btnNovaLista.addEventListener("click", function () {
@@ -93,24 +71,6 @@ btnNovaLista.addEventListener("click", function () {
   btnRemove.addEventListener("click", function () {
     btnRemove.parentElement.remove();
   });
-  console.log(criaOl);
 
-  document.querySelector(".lista-tarefas").appendChild(criaOl);
-});
-
-btnNovoDia.addEventListener("click", function () {
-  const criaOl = document.createElement("ol");
-  const criaTitulo = document.createElement("h3");
-  const date = formatDate(time);
-  const btnRemove = createButtonEl();
-
-  btnRemoveClasses(btnRemove);
-
-  btnRemove.addEventListener("click", function () {
-    btnRemove.parentElement.remove();
-  });
-  criaTitulo.innerHTML = date;
-  criaOl.appendChild(criaTitulo);
-  criaOl.appendChild(btnRemove);
   document.querySelector(".lista-tarefas").appendChild(criaOl);
 });
